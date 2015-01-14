@@ -18,7 +18,10 @@ class SearchTests: XCTestCase {
         XCTAssertNil(engine.description)
 
         // Test regular search queries.
-        XCTAssertEqual(engine.urlForQuery("foobar")!.absoluteString!, "https://www.google.com/search?q=foobar&ie=utf-8&oe=utf-8")
+        XCTAssertEqual(engine.searchURLForQuery("foobar")!.absoluteString!, "https://www.google.com/search?q=foobar&ie=utf-8&oe=utf-8")
+
+        // Test search suggestion queries.
+        XCTAssertEqual(engine.suggestURLForQuery("foobar")!.absoluteString!, "https://www.google.com/complete/search?client=firefox&q=foobar")
     }
 
     func testSearchEngines() {
@@ -29,5 +32,31 @@ class SearchTests: XCTestCase {
             let engine = engines[i]
             XCTAssertEqual(engine.shortName, ExpectedEngines[i])
         }
+    }
+
+    // TODO: Use a mock HTTP server instead.
+    func testSuggestClient() {
+        let parser = OpenSearchParser(pluginMode: true)
+        let file = NSBundle.mainBundle().pathForResource("google", ofType: "xml", inDirectory: "Locales/en-US/searchplugins")
+        let engine: OpenSearchEngine! = parser.parse(file!)
+        let client = SearchSuggestClient(searchEngine: engine)
+
+        let expectation = self.expectationWithDescription("Response received")
+
+        client.query("foobar", callback: { response, error in
+            if error != nil {
+                XCTFail("Error: \(error?.description)")
+            }
+
+            // TODO: This test is especially fragile since the suggestions list may change at any time.
+            // Check just the first few results since they're likely more stable.
+            XCTAssertEqual(response![0], "foobar")
+            XCTAssertEqual(response![1], "foobar2000 mac")
+            XCTAssertEqual(response![2], "foobar skins")
+
+            expectation.fulfill()
+        })
+
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
 }
