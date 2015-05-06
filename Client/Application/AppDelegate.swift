@@ -13,7 +13,6 @@ public func isAuroraChannel() -> Bool {
     return NSBundle.mainBundle().bundleIdentifier == AuroraBundleIdentifier
 }
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var profile: Profile!
@@ -29,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Start the keyboard helper to monitor and cache keyboard state.
         KeyboardHelper.defaultHelper.startObserving()
+
+        // Show tap circles.
+        (application as! QTouchposeApplication).alwaysShowTouches = true
 
         if NSClassFromString("XCTestCase") == nil {
             profile = BrowserProfile(localName: "profile", app: application)

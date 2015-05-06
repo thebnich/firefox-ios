@@ -289,6 +289,8 @@
 		D3589EF71A8D930000F28118 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CD9F191A6D9B7B00318571 /* libz.dylib */; };
 		D36998891AD70A0A00650C6C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D36998881AD70A0A00650C6C /* IOKit.framework */; };
 		D375A9201AE71675001B30D5 /* ViewMemoryLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D375A91F1AE71675001B30D5 /* ViewMemoryLeakTests.swift */; };
+		D385BAD41AFA937B007BF793 /* QTouchposeApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D385BAD31AFA937B007BF793 /* QTouchposeApplication.m */; };
+		D385BAD61AFA94BD007BF793 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D385BAD51AFA94BD007BF793 /* main.swift */; };
 		D38A1BEE1A9FA2CA00F6A386 /* SiteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38A1BEC1A9FA2CA00F6A386 /* SiteTableViewController.swift */; };
 		D38A1BEF1A9FA2CA00F6A386 /* SiteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38A1BEC1A9FA2CA00F6A386 /* SiteTableViewController.swift */; };
 		D38A1BF01A9FA2CA00F6A386 /* SiteTableViewControllerHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = D38A1BED1A9FA2CA00F6A386 /* SiteTableViewControllerHeader.xib */; };
@@ -1232,6 +1234,9 @@
 		D35275151AA8D13B00E9C906 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		D36998881AD70A0A00650C6C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
 		D375A91F1AE71675001B30D5 /* ViewMemoryLeakTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewMemoryLeakTests.swift; sourceTree = "<group>"; };
+		D385BAD21AFA937B007BF793 /* QTouchposeApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QTouchposeApplication.h; path = "Carthage/Checkouts/Touchpose/Touchpose Example/Source/QTouchposeApplication.h"; sourceTree = "<group>"; };
+		D385BAD31AFA937B007BF793 /* QTouchposeApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QTouchposeApplication.m; path = "Carthage/Checkouts/Touchpose/Touchpose Example/Source/QTouchposeApplication.m"; sourceTree = "<group>"; };
+		D385BAD51AFA94BD007BF793 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		D38A1BEC1A9FA2CA00F6A386 /* SiteTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteTableViewController.swift; sourceTree = "<group>"; };
 		D38A1BED1A9FA2CA00F6A386 /* SiteTableViewControllerHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SiteTableViewControllerHeader.xib; sourceTree = "<group>"; };
 		D38B2D101A8D96D00040E6B5 /* GCDWebServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebServer.h; sourceTree = "<group>"; };
@@ -1734,6 +1739,7 @@
 		28CE83EF1A1D246900576538 /* Third-Party Source */ = {
 			isa = PBXGroup;
 			children = (
+				D385BAD11AFA934E007BF793 /* Touchpose */,
 				288A2D801AB8B2B90023ABC3 /* Deferred */,
 				288A2D7F1AB8B2B20023ABC3 /* Box */,
 				288A2D7E1AB8B2AD0023ABC3 /* Result */,
@@ -1954,6 +1960,15 @@
 				0BEFED8B1AC21C1E002E0A0C /* SDWebThumbnails.swift */,
 			);
 			path = Providers;
+			sourceTree = "<group>";
+		};
+		D385BAD11AFA934E007BF793 /* Touchpose */ = {
+			isa = PBXGroup;
+			children = (
+				D385BAD21AFA937B007BF793 /* QTouchposeApplication.h */,
+				D385BAD31AFA937B007BF793 /* QTouchposeApplication.m */,
+			);
+			name = Touchpose;
 			sourceTree = "<group>";
 		};
 		D38A1BEB1A9FA2CA00F6A386 /* Widgets */ = {
@@ -2333,6 +2348,7 @@
 				F84B21E51A0910F600AAB793 /* AppDelegate.swift */,
 				E40FAB0B1A7ABB77009CB80D /* WebServer.swift */,
 				E4D6BEB81A0930EC00F538BD /* LaunchScreen.xib */,
+				D385BAD51AFA94BD007BF793 /* main.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -3643,9 +3659,11 @@
 				D301AAEE1A3A55B70078DD1D /* TabTrayController.swift in Sources */,
 				D38B2D431A8D96D00040E6B5 /* GCDWebServerMultiPartFormRequest.m in Sources */,
 				0B62EFD21AD63CD100ACB9CD /* Clearables.swift in Sources */,
+				D385BAD41AFA937B007BF793 /* QTouchposeApplication.m in Sources */,
 				E4CD9E911A6897FB00318571 /* ReaderMode.swift in Sources */,
 				D38B2D371A8D96D00040E6B5 /* GCDWebServerRequest.m in Sources */,
 				D314E7F71A37B98700426A76 /* BrowserToolbar.swift in Sources */,
+				D385BAD61AFA94BD007BF793 /* main.swift in Sources */,
 				0BB5B2891AC0A2B90052877D /* Toolbar.swift in Sources */,
 				D38B2D461A8D96D00040E6B5 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
 				D38B2D4C1A8D96D00040E6B5 /* GCDWebServerErrorResponse.m in Sources */,
