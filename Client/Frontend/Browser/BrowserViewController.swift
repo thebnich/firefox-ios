@@ -1537,6 +1537,21 @@ extension BrowserViewController: WKNavigationDelegate {
                 log.warning("Implicitly unwrapped optional navigation was nil.")
             }
 
+            // The screenshot immediately after didFinishNavigation is actually a screenshot of the
+            // previous page, presumably due to an iOS bug. Adding a small delay seems to fix this,
+            // and the current page gets captured as expected.
+            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(100 * NSEC_PER_MSEC))
+            dispatch_after(time, dispatch_get_main_queue()) {
+                if webView.URL != url {
+                    // The page changed during the delay, so we missed our chance to get a screenshot.
+                    return
+                }
+
+                if let newBackgroundTabScreenshot = self.screenshotHelper.takeScreenshot(tab, aspectRatio: 0, quality: 1) {
+                    tab.setScreenshot(newBackgroundTabScreenshot)
+                }
+            }
+
             postLocationChangeNotificationForTab(tab, navigation: navigation)
 
             // Fire the readability check. This is here and not in the pageShow event handler in ReaderMode.js anymore
