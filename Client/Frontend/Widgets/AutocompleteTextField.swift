@@ -70,15 +70,13 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate {
     }
 
     func highlightAll() {
-        if let text = text {
-            if !text.isEmpty {
-                let attributedString = NSMutableAttributedString(string: text)
-                attributedString.addAttribute(NSBackgroundColorAttributeName, value: highlightColor, range: NSMakeRange(0, (text).characters.count))
-                attributedText = attributedString
+        if let text = text where !text.isEmpty {
+            let attributedString = NSMutableAttributedString(string: text)
+            attributedString.addAttribute(NSBackgroundColorAttributeName, value: highlightColor, range: NSMakeRange(0, (text).characters.count))
+            attributedText = attributedString
 
-                enteredText = ""
-                completionActive = true
-            }
+            enteredText = ""
+            completionActive = true
         }
 
         selectedTextRange = textRangeFromPosition(beginningOfDocument, toPosition: beginningOfDocument)
@@ -91,6 +89,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate {
                 self.attributedText = NSAttributedString(string: text)
                 enteredText = text
             }
+
             completionActive = false
             previousSuggestion = ""
 
