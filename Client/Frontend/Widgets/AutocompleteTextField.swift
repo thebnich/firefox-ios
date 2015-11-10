@@ -25,7 +25,11 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate {
 
     private var completionActive = false
     private var canAutocomplete = true
-    private var enteredText = ""
+    private var enteredText = "" {
+        didSet {
+            print("ATF: enteredText = \(enteredText)")
+        }
+    }
     private var previousSuggestion = ""
     private var notifyTextChanged: (() -> ())? = nil
 
@@ -62,7 +66,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate {
     private func commonInit() {
         super.delegate = self
         super.addTarget(self, action: "SELtextDidChange:", forControlEvents: UIControlEvents.EditingChanged)
-        notifyTextChanged = debounce(0.1, action: {
+        notifyTextChanged = debounce(3, action: {
             if self.editing {
                 self.autocompleteDelegate?.autocompleteTextField(self, didEnterText: self.enteredText)
             }
@@ -105,10 +109,13 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate {
             // Workaround for stuck highlight bug.
             if enteredText.characters.count == 0 {
                 attributedText = NSAttributedString(string: " ")
+                print("ATF: Stuck highlight workaround")
             }
 
             attributedText = NSAttributedString(string: enteredText)
             completionActive = false
+
+            print("ATF: Completion removed")
         }
     }
 
@@ -118,6 +125,8 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         // Accept autocompletions if we're adding characters.
         canAutocomplete = !string.isEmpty
+
+        print("ATF: change in range: \(range), replacement: \(string)")
 
         if completionActive {
             if string.isEmpty {
@@ -140,6 +149,8 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate {
     }
 
     func setAutocompleteSuggestion(suggestion: String?) {
+        assert(NSThread.currentThread().isMainThread)
+
         // Setting the autocomplete suggestion during multi-stage input will break the session since the text
         // is not fully entered. If `markedTextRange` is nil, that means the multi-stage input is complete, so
         // it's safe to append the suggestion.
@@ -154,6 +165,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate {
                 attributedText = completedAndMarkedString
                 completionActive = true
                 previousSuggestion = suggestion
+                print("ATF: setting active, suggestion = \(suggestion), highlighted = \(endingString)")
                 return
             }
         }
