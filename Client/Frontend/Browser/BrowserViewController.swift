@@ -127,6 +127,7 @@ class BrowserViewController: UIViewController {
     }
 
     override func didReceiveMemoryWarning() {
+        urlBar.currentURL = NSURL(string: "LOW:MEMORY")
         super.didReceiveMemoryWarning()
         log.debug("BVC received memory warning")
     }
